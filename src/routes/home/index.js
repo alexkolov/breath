@@ -31,6 +31,7 @@ const Label = ({ phase }) => {
 };
 
 const Home = () => {
+	console.log('Version 0.0');
 	const [phase, setPhase] = useState(null);
 
 	const run = (index) => {

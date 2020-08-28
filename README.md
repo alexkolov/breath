@@ -21,6 +21,7 @@ npm run test
 
 # deploy to github pageges
 git subtree push --prefix build origin gh-pages
+copy CNAME to build folder
 
 ```
 

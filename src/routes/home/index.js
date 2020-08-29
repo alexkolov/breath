@@ -1,7 +1,9 @@
+import NoSleep from 'nosleep.js';
 import { useState } from 'preact/hooks';
 import style from './style';
 import beepAudio from '../../assets/beep.mp3'
 
+const noSleep = new NoSleep();
 const beep = new Audio(beepAudio);
 
 const phases = [
@@ -31,7 +33,7 @@ const Label = ({ phase }) => {
 };
 
 const Home = () => {
-	console.log('Version 0.0');
+	console.log('Version 0.1');
 	const [phase, setPhase] = useState(null);
 
 	const run = (index) => {
@@ -60,7 +62,14 @@ const Home = () => {
 
 	const toggle = () => {
 		console.log('toggle');
-		!phase ? run(0) : stop();
+
+		if (!phase) {
+			noSleep.enable();
+			run(0);
+		} else {
+			noSleep.disable();
+			stop();
+		}
 	};
 
 	return (

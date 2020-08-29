@@ -6,6 +6,7 @@
 	height: 56px;
 	padding: 0;
 	background: #673AB7;
+	@apply bg-gray-800;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	z-index: 50;
 }

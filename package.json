@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "breath",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "build": "preact build --no-prerender --dest docs; cp ./CNAME ./docs/CNAME",
@@ -17,14 +17,18 @@
     ]
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-preact-pure": "^2.0.0",
     "eslint": "^6.0.1",
     "eslint-config-preact": "^1.1.0",
     "jest": "^24.9.0",
     "jest-preset-preact": "^1.0.0",
+    "node-sass": "^4.14.1",
     "preact-cli": "^3.0.0",
-    "sirv-cli": "1.0.3"
+    "sass-loader": "^10.0.1",
+    "sirv-cli": "1.0.3",
+    "tailwindcss": "^1.7.6"
   },
   "dependencies": {
     "nosleep.js": "^0.11.0",

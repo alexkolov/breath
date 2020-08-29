@@ -64,10 +64,7 @@ const Home = () => {
 		console.log('toggle');
 
 		if (!phase) {
-			document.addEventListener('click', function enableNoSleep() {
-				document.removeEventListener('click', enableNoSleep, false);
-				noSleep.enable();
-			}, false);
+			noSleep.enable();
 			run(0);
 		} else {
 			noSleep.disable();

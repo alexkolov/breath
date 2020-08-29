@@ -1,28 +1,18 @@
 import NoSleep from 'nosleep.js';
 import { useState } from 'preact/hooks';
-import style from './style';
+import { phases } from '../../data/programs';
+import { Program } from '../../utils/program';
+import { TimeSelector } from './TimeSelector';
+import style from './style.scss';
 import beepAudio from '../../assets/beep.mp3'
 
 const noSleep = new NoSleep();
 const beep = new Audio(beepAudio);
-
-const phases = [
-	{
-		id: 0,
-		type: 'inhale',
-		length: 6
-	},
-	{
-		id: 1,
-		type: 'exhale',
-		length: 6
-	}
-];
+const program = new Program(phases, 90);
 
 let counter;
 
 const Label = ({ phase }) => {
-	console.log('in Label', phase);
 	return (
 		phase
 		? <h1>
@@ -33,39 +23,36 @@ const Label = ({ phase }) => {
 };
 
 const Home = () => {
-	console.log('Version 0.2');
-	const [phase, setPhase] = useState(null);
+	const [state, setState] = useState(program.state);
 
-	const run = (index) => {
-		console.log('running: ', index);
-		beep.play();
-		setPhase(phases[index]);
-		counter = setTimeout(
-			() => {
-				const nextIndex = phases[index + 1] ? index + 1 : 0;
-				console.log('nextIndex', nextIndex);
-				run(nextIndex);
-			},
-			phases[index].length * 1000
-		);
-		console.log('counter in run', counter);
+	const updateTimeTotal = (seconds) => {
+		program.timeTotal = seconds;
+		setState(program.state);
+	};
+
+	const run = () => {
+		if (program.forward()) {
+			beep.play();
+			counter = setTimeout(
+				() => run(),
+				program.currentPhase.length * 1000
+			);
+		}
+		setState(program.state);
 	};
 
 	const stop = () => {
-		setPhase(null);
-		console.log('counter in stop', counter);
+		program.stop();
+		setState(program.state);
 		if (counter) {
-			console.log('closing');
 			clearTimeout(counter);
 		}
 	};
 
 	const toggle = () => {
-		console.log('toggle');
-
-		if (!phase) {
+		if (!program.isActive) {
 			noSleep.enable();
-			run(0);
+			run();
 		} else {
 			noSleep.disable();
 			stop();
@@ -74,7 +61,12 @@ const Home = () => {
 
 	return (
 		<div class={style.home}>
-			<Label phase={phase} />
+			<Label phase={state.currentPhase} />
+
+			<TimeSelector
+				seconds={state.timeStats.timeTotal}
+				onChange={updateTimeTotal}
+			/>
 
 			<button
 				onClick={ toggle }

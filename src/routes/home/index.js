@@ -33,7 +33,7 @@ const Label = ({ phase }) => {
 };
 
 const Home = () => {
-	console.log('Version 0.1');
+	console.log('Version 0.2');
 	const [phase, setPhase] = useState(null);
 
 	const run = (index) => {
@@ -64,7 +64,10 @@ const Home = () => {
 		console.log('toggle');
 
 		if (!phase) {
-			noSleep.enable();
+			document.addEventListener('click', function enableNoSleep() {
+				document.removeEventListener('click', enableNoSleep, false);
+				noSleep.enable();
+			}, false);
 			run(0);
 		} else {
 			noSleep.disable();

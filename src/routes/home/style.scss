@@ -1,8 +1,44 @@
-.home {
-	padding: 56px 20px;
-	min-height: 100%;
-	width: 100%;
+.Home {
+	@apply flex flex-col h-full;
+	@apply pt-20;
+
+	.Middle {
+		@apply flex-1;
+		@apply flex flex-wrap items-center;
+
+		.Label {
+			@apply w-full text-center;
+		}
+
+		.TimeSelector {
+			@apply bg-gray-400 w-full;
+
+			.Value {
+				@apply flex justify-center;
+			}
+
+			.RangeSelector {
+				@apply block w-full p-4;
+			}
+		}
 }
 
-.TimeSelector {
+	.Bottom {
+		.ToggleButton {
+			@apply flex justify-center w-full;
+			@apply pb-6;
+
+			button {
+				@apply bg-gray-300 rounded-full p-2 inline-flex justify-start items-stretch;
+
+				&:hover {
+					@apply bg-gray-400;
+				}
+
+				svg {
+					@apply h-16 w-16;
+				}
+			}
+		}
+	}
 }

@@ -2,25 +2,16 @@ import NoSleep from 'nosleep.js';
 import { useState } from 'preact/hooks';
 import { phases } from '../../data/programs';
 import { Program } from '../../utils/program';
+import { Label } from './Label';
 import { TimeSelector } from './TimeSelector';
+import { ToggleButton } from './ToggleButton';
 import style from './style.scss';
 import beepAudio from '../../assets/beep.mp3'
 
 const noSleep = new NoSleep();
 const beep = new Audio(beepAudio);
 const program = new Program(phases, 90);
-
 let counter;
-
-const Label = ({ phase }) => {
-	return (
-		phase
-		? <h1>
-				Running: #{ phase.id + 1 } <span>{phase.type}</span>
-			</h1>
-		: <h1>Stopped</h1>
-	)
-};
 
 const Home = () => {
 	const [state, setState] = useState(program.state);
@@ -60,19 +51,21 @@ const Home = () => {
 	};
 
 	return (
-		<div class={style.home}>
-			<Label phase={state.currentPhase} />
+		<div class={style.Home}>
+			<div class={style.Middle}>
+				<Label phase={state.currentPhase} />
+				<TimeSelector
+					seconds={state.timeStats.timeTotal}
+					onChange={updateTimeTotal}
+				/>
+			</div>
 
-			<TimeSelector
-				seconds={state.timeStats.timeTotal}
-				onChange={updateTimeTotal}
-			/>
-
-			<button
-				onClick={ toggle }
-			>
-				Toggle
-			</button>
+			<div class={style.Bottom}>
+				<ToggleButton
+					onToggle={toggle}
+					icon={state.isActive ? 'break' : 'play'}
+				/>
+			</div>
 		</div>
 	);
 }

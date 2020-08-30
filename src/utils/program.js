@@ -35,6 +35,7 @@ export class Program {
 
   get state() {
     return {
+      isActive: this.isActive,
       currentPhase: this.currentPhase,
       timeStats: this.timeStats
     }

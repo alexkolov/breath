@@ -24,7 +24,7 @@ module.exports = (config, env, helpers, params = defaultParams) => {
 
     // Add PurgeCSS only in production.
     if (env.production) {
-      plugins.push(purgecss);
+      // plugins.push(purgecss);
     }
   });
   return config;
